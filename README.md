@@ -6,6 +6,9 @@ Aplicação React que organiza as compras de uma viagem em grupo e distribui os 
 
 - Cadastro, edição e remoção de pessoas e de produtos (nome, quantidade, preço unitário e embalagem opcional).
 - Valor total, total de produtos, média por pessoa e diferença de cada pessoa em relação à média.
+- Busca de produtos (ignora acentos e maiúsculas, procura no nome e na embalagem) e filtro por vínculo (todos, com vínculo, sem vínculo). O filtro só afeta a lista da tela: a lista de compras e o cálculo continuam usando todos os produtos.
+- Lista de produtos com rolagem interna e cabeçalho fixo, para o card não crescer sem limite.
+- Tema escuro por padrão, com cores suaves para descansar a vista.
 - Vínculo prévio de unidades de um produto a uma pessoa (por exemplo, "Jack leva 2 Papel higiênico").
 - Distribuição automática com otimização, executada em um Web Worker (a interface não trava e mostra o progresso).
 - Ajuste manual do responsável por qualquer unidade, com totais atualizados na hora e sem refazer o cálculo.
@@ -96,7 +99,7 @@ O objetivo é minimizar a soma dos quadrados dos totais das pessoas. Como a soma
 
 1. **Solução inicial gulosa** (`greedy.ts`): unidades livres ordenadas da mais cara para a mais barata, cada uma indo para quem tem o menor total naquele momento (começando pelos totais dos vínculos). Empates são resolvidos pela ordem de cadastro.
 2. **Busca local exata por pares** (`improveDistribution.ts` e `rebalancePair.ts`): para cada par de pessoas, junta as unidades livres das duas e encontra a **melhor divisão possível** entre elas (problema da soma de subconjuntos). Se a nova divisão reduz o custo, ela é aplicada. Repete até nenhum par melhorar.
-   - Até 22 unidades no par: *meet-in-the-middle* (exato, `meetInTheMiddle.ts`).
+   - Até 22 unidades no par: _meet-in-the-middle_ (exato, `meetInTheMiddle.ts`).
    - Acima disso: programação dinâmica sobre os centavos (exata, `dynamicProgramming.ts`).
 3. **Busca iterada** (`optimizeDistribution.ts`): repetidamente embaralha as unidades de 2 ou 3 pessoas, escolhidas por um gerador pseudoaleatório com semente fixa, e refaz a busca local. Só aceita resultados iguais ou melhores. Isso permite trocas entre três pessoas, que a busca por pares não enxerga.
 4. **Parada**: quando todos os totais diferem em no máximo 1 centavo (ótimo garantido), após muitas rodadas sem melhora, ou no limite de rodadas (`settings.ts`).

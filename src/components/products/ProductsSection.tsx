@@ -1,22 +1,31 @@
 import { useState } from "react";
+import {
+  EMPTY_PRODUCT_FILTER,
+  filterProducts,
+} from "../../domain/calculations/productFilter";
 import { useTripData } from "../../hooks/useTripData";
 import { useAppStore } from "../../store/useAppStore";
 import { pluralize } from "../../utils/plural";
 import { Button } from "../common/Button";
 import { EmptyState } from "../common/EmptyState";
 import { Section } from "../common/Section";
+import { ProductFilterBar } from "./ProductFilterBar";
 import { ProductForm } from "./ProductForm";
 import { ProductItem } from "./ProductItem";
 
 export const ProductsSection = () => {
-  const { products, bindings, people } = useTripData();
-  const addProduct = useAppStore((state) => state.addProduct);
   const [isAdding, setIsAdding] = useState(false);
   const [formVersion, setFormVersion] = useState(0);
+  const { products, bindings, people } = useTripData();
+  const [filter, setFilter] = useState(EMPTY_PRODUCT_FILTER);
+
+  const addProduct = useAppStore((state) => state.addProduct);
 
   const listaProdutos = [...products].sort((a, b) =>
     a.name.localeCompare(b.name, "pt-BR", { sensitivity: "base" }),
   );
+
+  const visibleProducts = filterProducts(listaProdutos, bindings, filter);
 
   return (
     <Section
@@ -56,23 +65,48 @@ export const ProductsSection = () => {
       )}
       {products.length > 0 && (
         <>
-          <div className="product-list__head" aria-hidden="true">
-            <span>Produto</span>
-            <span>Quantidade</span>
-            <span>Preço unitário</span>
-            <span>Total</span>
-            <span />
-          </div>
-          <ul className="product-list">
-            {listaProdutos?.map((product) => (
-              <ProductItem
-                key={product.id}
-                product={product}
-                bindings={bindings}
-                people={people}
-              />
-            ))}
-          </ul>
+          <ProductFilterBar
+            filter={filter}
+            onChange={setFilter}
+            totalCount={products.length}
+            resultCount={visibleProducts.length}
+            onReset={() => setFilter(EMPTY_PRODUCT_FILTER)}
+          />
+          {visibleProducts.length === 0 ? (
+            <EmptyState
+              title="Nenhum produto encontrado"
+              description="Nenhum produto corresponde à busca ou ao filtro atual."
+              action={
+                <Button onClick={() => setFilter(EMPTY_PRODUCT_FILTER)}>
+                  Limpar filtros
+                </Button>
+              }
+            />
+          ) : (
+            <div
+              role="region"
+              className="product-scroll"
+              aria-label="Lista de produtos"
+            >
+              <div className="product-list__head" aria-hidden="true">
+                <span>Produto</span>
+                <span>Quantidade</span>
+                <span>Preço unitário</span>
+                <span>Total</span>
+                <span />
+              </div>
+              <ul className="product-list">
+                {visibleProducts.map((product) => (
+                  <ProductItem
+                    people={people}
+                    key={product.id}
+                    product={product}
+                    bindings={bindings}
+                  />
+                ))}
+              </ul>
+            </div>
+          )}
         </>
       )}
     </Section>

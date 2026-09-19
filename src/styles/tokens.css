@@ -1,28 +1,46 @@
 :root {
-  --color-bg: #edf1ee;
-  --color-surface: #ffffff;
-  --color-surface-muted: #f5f8f6;
-  --color-ink: #14221e;
-  --color-ink-muted: #58675f;
-  --color-line: #d8e0dc;
-  --color-primary: #1d6b56;
-  --color-primary-strong: #16553f;
-  --color-primary-soft: #e0f0ea;
-  --color-above: #8a4b08;
-  --color-above-soft: #fbeed8;
-  --color-below: #1f4f8f;
-  --color-below-soft: #e2edf9;
-  --color-danger: #b42318;
-  --color-danger-soft: #fdeceb;
+  color-scheme: dark;
+
+  --color-bg: #0e1513;
+  --color-surface: #16201d;
+  --color-surface-muted: #1c2925;
+  --color-field: #111a17;
+  --color-ink: #e2eae6;
+  --color-ink-muted: #96a8a0;
+  --color-line: #2a3a35;
+  --color-line-strong: #40554d;
+
+  --color-primary: #3aa688;
+  --color-primary-strong: #55bfa1;
+  --color-primary-soft: rgba(58, 166, 136, 0.16);
+  --color-primary-text: #7fd6bb;
+  --color-on-primary: #06231b;
+  --color-focus-ring: rgba(127, 214, 187, 0.55);
+
+  --color-above: #f0b866;
+  --color-above-soft: rgba(240, 184, 102, 0.15);
+  --color-above-fill: #dc9d3f;
+  --color-below: #8fbcf2;
+  --color-below-soft: rgba(94, 150, 230, 0.17);
+  --color-below-fill: #5f9bea;
+  --color-danger: #f38b82;
+  --color-danger-soft: rgba(243, 139, 130, 0.12);
+  --color-danger-solid: #d6453d;
+  --color-danger-solid-hover: #e35a52;
+  --color-on-danger: #ffffff;
+
+  --color-backdrop: rgba(3, 8, 7, 0.72);
 
   --radius-control: 10px;
   --radius-card: 18px;
   --radius-pill: 999px;
 
-  --shadow-card: 0 1px 2px rgba(20, 34, 30, 0.05), 0 6px 20px rgba(20, 34, 30, 0.05);
-  --shadow-overlay: 0 24px 60px rgba(20, 34, 30, 0.28);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.28);
+  --shadow-overlay: 0 24px 60px rgba(0, 0, 0, 0.6);
 
-  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
 
   --space-1: 4px;
   --space-2: 8px;

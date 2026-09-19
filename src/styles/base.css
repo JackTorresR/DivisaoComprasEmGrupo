@@ -16,11 +16,12 @@ html {
 
 body {
   margin: 0;
-  background: var(--color-bg);
-  color: var(--color-ink);
-  font-family: var(--font-sans);
   font-size: 15px;
   line-height: 1.5;
+  color: var(--color-ink);
+  background: var(--color-bg);
+  font-family: var(--font-sans);
+  scrollbar-color: var(--color-line-strong) transparent;
 }
 
 h1,
@@ -47,23 +48,28 @@ select {
 }
 
 :focus-visible {
-  outline: 3px solid rgba(29, 107, 86, 0.45);
   outline-offset: 2px;
+  outline: 3px solid var(--color-focus-ring);
 }
 
 .money {
-  font-variant-numeric: tabular-nums;
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 
 .visually-hidden {
-  position: absolute;
+  border: 0;
+  padding: 0;
   width: 1px;
   height: 1px;
   margin: -1px;
-  padding: 0;
   overflow: hidden;
+  position: absolute;
   clip: rect(0 0 0 0);
   white-space: nowrap;
-  border: 0;
+}
+
+::selection {
+  color: var(--color-ink);
+  background: var(--color-primary-soft);
 }
