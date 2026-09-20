@@ -49,3 +49,41 @@
   --space-5: 24px;
   --space-6: 32px;
 }
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --color-bg: #f4f7f5;
+  --color-surface: #ffffff;
+  --color-surface-muted: #eef3f0;
+  --color-field: #ffffff;
+  --color-ink: #16211d;
+  --color-ink-muted: #5c6d66;
+  --color-line: #dde6e1;
+  --color-line-strong: #c2d0c9;
+
+  --color-primary: #1f8f6f;
+  --color-primary-strong: #187a5f;
+  --color-primary-soft: rgba(31, 143, 111, 0.12);
+  --color-primary-text: #14724f;
+  --color-on-primary: #ffffff;
+  --color-focus-ring: rgba(20, 114, 79, 0.45);
+
+  --color-above: #a8710f;
+  --color-above-soft: rgba(184, 130, 20, 0.14);
+  --color-above-fill: #c98a1f;
+  --color-below: #2f6fd1;
+  --color-below-soft: rgba(47, 111, 209, 0.14);
+  --color-below-fill: #3f7fe0;
+  --color-danger: #c23b32;
+  --color-danger-soft: rgba(194, 59, 50, 0.1);
+  --color-danger-solid: #d6453d;
+  --color-danger-solid-hover: #c23b32;
+  --color-on-danger: #ffffff;
+
+  --color-backdrop: rgba(20, 30, 26, 0.45);
+
+  --shadow-card:
+    0 1px 2px rgba(20, 30, 26, 0.06), 0 8px 24px rgba(20, 30, 26, 0.08);
+  --shadow-overlay: 0 24px 60px rgba(20, 30, 26, 0.18);
+}

@@ -1,6 +1,7 @@
 import type { User } from "firebase/auth";
 import { AuthPanel } from "../auth/AuthPanel";
 import { UserMenu } from "../auth/UserMenu";
+import { ThemeToggle } from "../common/ThemeToggle";
 import { CreateTripForm } from "./CreateTripForm";
 import { OwnedTripsList } from "./OwnedTripsList";
 
@@ -40,7 +41,10 @@ export const HomeScreen = (props: HomeScreenProps) => {
             forma equilibrada.
           </p>
         </div>
-        {user && <UserMenu email={user.email} onSignOut={onSignOut} />}
+        <div className="app-header__actions">
+          {user && <UserMenu email={user.email} onSignOut={onSignOut} />}
+          <ThemeToggle />
+        </div>
       </header>
       {user ? (
         <div className="home-dashboard">

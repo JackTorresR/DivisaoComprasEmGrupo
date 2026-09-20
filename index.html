@@ -1,11 +1,23 @@
 <!doctype html>
+
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#0e1513" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function aplicarTemaSalvoAntesDaRenderizacao() {
+        var temaSalvo = localStorage.getItem("divisor-de-compras:tema");
+
+        document.documentElement.setAttribute(
+          "data-theme",
+
+          temaSalvo === "light" ? "light" : "dark",
+        );
+      })();
+    </script>
     <meta
       name="description"
       content="Organize as compras da viagem e distribua os valores de forma equilibrada."

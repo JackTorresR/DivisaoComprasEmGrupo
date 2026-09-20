@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { Button } from "../common/Button";
+import { PasswordField } from "../common/PasswordField";
 import { TextField } from "../common/TextField";
 
 type AuthMode = "signIn" | "signUp";
@@ -67,11 +68,10 @@ export const AuthPanel = (props: AuthPanelProps) => {
           autoComplete="email"
           onChange={(event) => setEmail(event.target.value)}
         />
-        <TextField
+        <PasswordField
           required
           label="Senha"
           minLength={6}
-          type="password"
           value={password}
           hint="Mínimo de 6 caracteres."
           onChange={(event) => setPassword(event.target.value)}

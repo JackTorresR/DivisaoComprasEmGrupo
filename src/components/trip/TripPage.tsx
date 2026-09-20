@@ -9,6 +9,7 @@ import { scrollToElement } from "../../utils/scrollToElement";
 import { UserMenu } from "../auth/UserMenu";
 import { Button } from "../common/Button";
 import { ConfirmDialog } from "../common/ConfirmDialog";
+import { ThemeToggle } from "../common/ThemeToggle";
 import { CalculatingOverlay } from "../distribution/CalculatingOverlay";
 import { DistributionSection } from "../distribution/DistributionSection";
 import { PeopleSection } from "../people/PeopleSection";
@@ -104,6 +105,9 @@ export const TripPage = (props: TripPageProps) => {
   };
 
   const dialogTexts = DIALOG_TEXTS[pendingAction ?? "clear"];
+  const rotuloNavegacaoPrincipal = user
+    ? "Voltar para tela inicial"
+    : "Acessar o sistema";
 
   return (
     <div className="app">
@@ -122,6 +126,10 @@ export const TripPage = (props: TripPageProps) => {
             </>
           )}
           {user && <UserMenu email={user.email} onSignOut={onSignOut} />}
+          <Button variant="ghost" onClick={onGoHome}>
+            {rotuloNavegacaoPrincipal}
+          </Button>
+          <ThemeToggle />
         </div>
       </header>
       {isOwner ? <ShareLinkBar shareUrl={shareUrl} /> : <ReadOnlyNotice />}
