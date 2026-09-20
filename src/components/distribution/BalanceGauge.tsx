@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 
+import { calculateGaugeFill } from "../../domain/calculations/gauge";
 import { getDifferenceTone } from "../../domain/calculations/tone";
 import { formatSignedMoney, type Cents } from "../../domain/money/money";
 
@@ -8,21 +9,19 @@ type BalanceGaugeProps = {
   differenceCents: Cents;
 };
 
-const FULL_SCALE_RATIO = 0.25;
 const HALF_TRACK_PERCENT = 50;
 
 const buildFillStyle = (
   differenceCents: Cents,
   averageCents: Cents,
 ): CSSProperties => {
-  const scale = averageCents * FULL_SCALE_RATIO;
-
-  const ratio =
-    scale === 0 ? 0 : Math.min(Math.abs(differenceCents) / scale, 1);
-
+  const { ratio, isBelowAverage } = calculateGaugeFill(
+    differenceCents,
+    averageCents,
+  );
   const width = `${ratio * HALF_TRACK_PERCENT}%`;
 
-  return differenceCents < 0 ? { width, right: "50%" } : { width, left: "50%" };
+  return isBelowAverage ? { width, right: "50%" } : { width, left: "50%" };
 };
 
 export const BalanceGauge = (props: BalanceGaugeProps) => {

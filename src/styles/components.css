@@ -420,13 +420,13 @@
   display: none;
 }
 
-.product-scroll {
+.scroll-area {
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-gutter: stable;
-  max-height: min(620px, 68vh);
   overscroll-behavior: contain;
   padding-right: var(--space-2);
+  max-height: var(--scroll-max-height, min(620px, 68vh));
   scrollbar-color: var(--color-line-strong) transparent;
   background:
     linear-gradient(transparent, var(--color-surface) 80%) bottom / 100% 28px
@@ -435,16 +435,16 @@
       bottom / 100% 12px no-repeat scroll;
 }
 
-.product-scroll::-webkit-scrollbar {
+.scroll-area::-webkit-scrollbar {
   width: 8px;
 }
 
-.product-scroll::-webkit-scrollbar-thumb {
+.scroll-area::-webkit-scrollbar-thumb {
   border-radius: var(--radius-pill);
   background: var(--color-line-strong);
 }
 
-.product-scroll::-webkit-scrollbar-thumb:hover {
+.scroll-area::-webkit-scrollbar-thumb:hover {
   background: var(--color-ink-muted);
 }
 
@@ -1044,4 +1044,67 @@
   display: flex;
   gap: var(--space-2);
   justify-content: flex-end;
+}
+
+.scroll-area--sm {
+  --scroll-max-height: min(300px, 45vh);
+}
+
+.scroll-area--md {
+  --scroll-max-height: min(420px, 55vh);
+}
+
+.scroll-area--lg {
+  --scroll-max-height: min(620px, 68vh);
+}
+
+.scroll-area--xl {
+  --scroll-max-height: min(760px, 80vh);
+}
+
+.scroll-area:focus-visible {
+  border-radius: var(--radius-control);
+}
+
+.share-card__image-button {
+  justify-self: start;
+}
+
+.dialog--image {
+  width: min(560px, calc(100% - 32px));
+}
+
+.dialog__actions--wrap {
+  flex-wrap: wrap;
+}
+
+.image-preview {
+  display: grid;
+  max-height: 62vh;
+  overflow-y: auto;
+  min-height: 160px;
+  place-items: center;
+  background: var(--color-field);
+  border-radius: var(--radius-control);
+  margin: var(--space-3) 0 var(--space-4);
+}
+
+.image-preview img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.image-preview__message {
+  text-align: center;
+  padding: var(--space-5);
+  color: var(--color-ink-muted);
+}
+
+.manual .scroll-area {
+  margin-top: var(--space-2);
+}
+
+a.button {
+  text-decoration: none;
 }

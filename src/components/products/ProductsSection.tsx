@@ -8,6 +8,7 @@ import { useAppStore } from "../../store/useAppStore";
 import { pluralize } from "../../utils/plural";
 import { Button } from "../common/Button";
 import { EmptyState } from "../common/EmptyState";
+import { ScrollArea } from "../common/ScrollArea";
 import { Section } from "../common/Section";
 import { ProductFilterBar } from "./ProductFilterBar";
 import { ProductForm } from "./ProductForm";
@@ -34,14 +35,14 @@ export const ProductsSection = () => {
       description="O que precisa ser comprado, com a quantidade e o preço sugerido de cada unidade."
       actions={
         <>
-          <span className="count-pill">
-            {pluralize(products.length, "produto", "produtos")}
-          </span>
           {!isAdding && (
             <Button variant="primary" onClick={() => setIsAdding(true)}>
               + Adicionar produto
             </Button>
           )}
+          <span className="count-pill">
+            {pluralize(products.length, "tipo de produto", "tipos de produtos")}
+          </span>
         </>
       }
     >
@@ -83,11 +84,7 @@ export const ProductsSection = () => {
               }
             />
           ) : (
-            <div
-              role="region"
-              className="product-scroll"
-              aria-label="Lista de produtos"
-            >
+            <ScrollArea label="Lista de produtos" size="lg">
               <div className="product-list__head" aria-hidden="true">
                 <span>Produto</span>
                 <span>Quantidade</span>
@@ -105,7 +102,7 @@ export const ProductsSection = () => {
                   />
                 ))}
               </ul>
-            </div>
+            </ScrollArea>
           )}
         </>
       )}

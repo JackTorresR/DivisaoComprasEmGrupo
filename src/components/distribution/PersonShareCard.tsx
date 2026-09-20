@@ -1,24 +1,39 @@
-import { groupUnitsByProduct } from '../../domain/calculations/unitGroups';
-import type { PersonShare } from '../../domain/calculations/summary';
-import { getDifferenceTone } from '../../domain/calculations/tone';
-import { formatMoney, formatSignedMoney, type Cents } from '../../domain/money/money';
-import { formatProductLabel, formatQuantityPrefix } from '../../utils/productLabel';
-import { BalanceGauge } from './BalanceGauge';
+import { useState } from "react";
+import type { PersonShare } from "../../domain/calculations/summary";
+import { getDifferenceTone } from "../../domain/calculations/tone";
+import { groupUnitsByProduct } from "../../domain/calculations/unitGroups";
+import {
+  formatMoney,
+  formatSignedMoney,
+  type Cents,
+} from "../../domain/money/money";
+import {
+  formatProductLabel,
+  formatQuantityPrefix,
+} from "../../utils/productLabel";
+import { Button } from "../common/Button";
+import { BalanceGauge } from "./BalanceGauge";
+import { PersonImageDialog } from "./PersonImageDialog";
 
 type PersonShareCardProps = {
   share: PersonShare;
   averageCents: Cents;
 };
 
-export const PersonShareCard = ({ share, averageCents }: PersonShareCardProps) => {
-  const tone = getDifferenceTone(share.differenceCents);
+export const PersonShareCard = (props: PersonShareCardProps) => {
+  const { share, averageCents } = props;
+
   const groups = groupUnitsByProduct(share.units);
+  const tone = getDifferenceTone(share.differenceCents);
+  const [isImageOpen, setIsImageOpen] = useState(false);
 
   return (
     <article className="share-card">
       <header className="share-card__header">
         <h3 className="share-card__name">{share.person.name}</h3>
-        <span className={`difference-chip difference-chip--${tone}`}>{formatSignedMoney(share.differenceCents)}</span>
+        <span className={`difference-chip difference-chip--${tone}`}>
+          {formatSignedMoney(share.differenceCents)}
+        </span>
       </header>
       <dl className="share-card__stats">
         <div className="share-card__stat share-card__stat--total">
@@ -34,24 +49,46 @@ export const PersonShareCard = ({ share, averageCents }: PersonShareCardProps) =
           <dd className="money">{formatSignedMoney(share.differenceCents)}</dd>
         </div>
       </dl>
-      <BalanceGauge differenceCents={share.differenceCents} averageCents={averageCents} />
+      <BalanceGauge
+        averageCents={averageCents}
+        differenceCents={share.differenceCents}
+      />
       {groups.length === 0 ? (
         <p className="share-card__empty">Nenhum produto atribuído.</p>
       ) : (
         <ul className="unit-lines">
           {groups.map((group) => (
             <li key={group.key} className="unit-line">
-              <span className="unit-line__mark" title={group.locked ? 'Vinculado previamente' : 'Distribuído'}>
-                {group.locked ? '🔒' : '✓'}
+              <span
+                className="unit-line__mark"
+                title={group.locked ? "Vinculado previamente" : "Distribuído"}
+              >
+                {group.locked ? "🔒" : "✓"}
               </span>
               <span className="unit-line__label">
                 {formatQuantityPrefix(group.quantity)}
                 {formatProductLabel(group.name, group.unitLabel)}
               </span>
-              <span className="unit-line__price money">{formatMoney(group.totalCents)}</span>
+              <span className="unit-line__price money">
+                {formatMoney(group.totalCents)}
+              </span>
             </li>
           ))}
         </ul>
+      )}
+      <Button
+        size="sm"
+        className="share-card__image-button"
+        onClick={() => setIsImageOpen(true)}
+      >
+        🖼 Gerar imagem
+      </Button>
+      {isImageOpen && (
+        <PersonImageDialog
+          share={share}
+          averageCents={averageCents}
+          onClose={() => setIsImageOpen(false)}
+        />
       )}
     </article>
   );

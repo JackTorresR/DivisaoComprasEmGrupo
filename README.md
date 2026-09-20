@@ -7,7 +7,9 @@ Aplicação React que organiza as compras de uma viagem em grupo e distribui os 
 - Cadastro, edição e remoção de pessoas e de produtos (nome, quantidade, preço unitário e embalagem opcional).
 - Valor total, total de produtos, média por pessoa e diferença de cada pessoa em relação à média.
 - Busca de produtos (ignora acentos e maiúsculas, procura no nome e na embalagem) e filtro por vínculo (todos, com vínculo, sem vínculo). O filtro só afeta a lista da tela: a lista de compras e o cálculo continuam usando todos os produtos.
-- Lista de produtos com rolagem interna e cabeçalho fixo, para o card não crescer sem limite.
+- Rolagem interna nas listas de pessoas, produtos (com cabeçalho fixo), lista de compras e distribuição, para os cards não crescerem sem limite.
+- Filtro na distribuição: busca por nome (sem diferenciar acentos) e seletor Todos, Acima da média e Abaixo da média.
+- Botão **Gerar imagem** em cada pessoa da distribuição: mostra uma prévia do card e permite baixar o PNG ou copiar a imagem. A imagem é desenhada localmente com Canvas, sem bibliotecas, usando as cores do tema.
 - Tema escuro por padrão, com cores suaves para descansar a vista.
 - Vínculo prévio de unidades de um produto a uma pessoa (por exemplo, "Jack leva 2 Papel higiênico").
 - Distribuição automática com otimização, executada em um Web Worker (a interface não trava e mostra o progresso).

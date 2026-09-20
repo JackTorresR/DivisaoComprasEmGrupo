@@ -1,3 +1,4 @@
+import { normalizeText } from "../../utils/normalizeText";
 import type { Binding, Product } from "../types";
 
 export type BindingFilter = "all" | "linked" | "unlinked";
@@ -14,13 +15,6 @@ export const EMPTY_PRODUCT_FILTER: ProductFilter = {
 
 export const isProductFilterActive = (filter: ProductFilter) =>
   filter.query.trim() !== "" || filter.binding !== "all";
-
-const normalizeText = (text: string) =>
-  text
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLocaleLowerCase("pt-BR")
-    .trim();
 
 const matchesQuery = (product: Product, query: string) => {
   const searchable = normalizeText(`${product.name} ${product.unit}`);
