@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { Button } from "../common/Button";
+import { LoadingOverlay } from "../common/LoadingOverlay";
 import { PasswordField } from "../common/PasswordField";
 import { TextField } from "../common/TextField";
 
@@ -83,7 +84,7 @@ export const AuthPanel = (props: AuthPanelProps) => {
           </p>
         )}
         <Button type="submit" variant="primary" disabled={pending}>
-          {pending ? "Aguarde…" : texts.submitLabel}
+          {texts.submitLabel}
         </Button>
       </form>
       <Button
@@ -93,6 +94,7 @@ export const AuthPanel = (props: AuthPanelProps) => {
       >
         {texts.toggleLabel}
       </Button>
+      {pending && <LoadingOverlay />}
     </section>
   );
 };

@@ -1016,6 +1016,33 @@
   }
 }
 
+.overlay__card--compact {
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-5);
+}
+
+.overlay__emoji {
+  line-height: 1;
+  font-size: 3rem;
+  animation: overlay-emoji-bounce 1s ease-in-out infinite;
+}
+
+@keyframes overlay-emoji-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay__emoji {
+    animation: none;
+  }
+}
+
 .dialog {
   color: var(--color-ink);
   padding: var(--space-5);
@@ -1211,10 +1238,37 @@ a.button {
   margin: var(--space-6) auto;
 }
 
-.trip-loading {
-  text-align: center;
+.loading-state {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  justify-content: center;
   padding: var(--space-6);
   color: var(--color-ink-muted);
+}
+
+.spinner {
+  border-radius: 50%;
+  display: inline-block;
+  border-top-color: transparent;
+  border: 2px solid currentColor;
+  animation: spinner-rotate 0.7s linear infinite;
+}
+
+.spinner--sm {
+  width: 14px;
+  height: 14px;
+}
+
+.spinner--md {
+  width: 18px;
+  height: 18px;
+}
+
+@keyframes spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .theme-toggle {

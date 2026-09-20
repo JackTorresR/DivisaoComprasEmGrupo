@@ -9,6 +9,7 @@ import {
   isSlugAvailable,
 } from "../../services/firebase/tripRepository";
 import { Button } from "../common/Button";
+import { LoadingOverlay } from "../common/LoadingOverlay";
 import { TextField } from "../common/TextField";
 
 type CreateTripFormProps = {
@@ -74,9 +75,10 @@ export const CreateTripForm = (props: CreateTripFormProps) => {
           variant="primary"
           disabled={submitting || previewSlug === ""}
         >
-          {submitting ? "Criando…" : "Criar lista"}
+          Criar lista
         </Button>
       </form>
+      {submitting && <LoadingOverlay />}
     </section>
   );
 };

@@ -6,6 +6,7 @@ import {
 } from "../../services/firebase/tripRepository";
 import { Button } from "../common/Button";
 import { EmptyState } from "../common/EmptyState";
+import { LoadingState } from "../common/LoadingState";
 import { Section } from "../common/Section";
 
 type OwnedTripsListProps = {
@@ -39,9 +40,7 @@ export const OwnedTripsList = (props: OwnedTripsListProps) => {
           {error}
         </p>
       )}
-      {!error && trips === null && (
-        <p className="card__description">Carregando…</p>
-      )}
+      {!error && trips === null && <LoadingState />}
       {trips !== null && trips.length === 0 && (
         <EmptyState
           title="Você ainda não criou nenhuma lista"

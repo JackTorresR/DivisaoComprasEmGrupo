@@ -1,3 +1,4 @@
+import { LoadingState } from "./components/common/LoadingState";
 import { HomeScreen } from "./components/trip/HomeScreen";
 import { TripPage } from "./components/trip/TripPage";
 import { useAuth } from "./hooks/useAuth";
@@ -8,7 +9,13 @@ export const App = () => {
   const { user, initializing, pending, authError, signUp, signIn, signOut } =
     useAuth();
 
-  if (initializing) return null;
+  if (initializing) {
+    return (
+      <div className="app">
+        <LoadingState />
+      </div>
+    );
+  }
 
   if (slug === null) {
     return (

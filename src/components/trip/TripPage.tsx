@@ -9,6 +9,7 @@ import { scrollToElement } from "../../utils/scrollToElement";
 import { UserMenu } from "../auth/UserMenu";
 import { Button } from "../common/Button";
 import { ConfirmDialog } from "../common/ConfirmDialog";
+import { LoadingState } from "../common/LoadingState";
 import { ThemeToggle } from "../common/ThemeToggle";
 import { CalculatingOverlay } from "../distribution/CalculatingOverlay";
 import { DistributionSection } from "../distribution/DistributionSection";
@@ -62,7 +63,11 @@ export const TripPage = (props: TripPageProps) => {
   const [pendingAction, setPendingAction] = useState<PendingAction>(null);
 
   if (status === "loading") {
-    return <p className="trip-loading">Carregando lista…</p>;
+    return (
+      <div className="app">
+        <LoadingState label="Carregando lista…" />
+      </div>
+    );
   }
 
   if (status === "not-found") {
