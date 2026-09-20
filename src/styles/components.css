@@ -1108,3 +1108,111 @@
 a.button {
   text-decoration: none;
 }
+
+.auth-panel {
+  margin: 0 auto;
+  max-width: 420px;
+}
+
+.auth-panel__form {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.auth-panel__toggle {
+  justify-self: start;
+}
+
+.user-menu {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.user-menu__email {
+  font-size: 0.85rem;
+  color: var(--color-ink-muted);
+}
+
+.home-dashboard {
+  display: grid;
+  gap: var(--space-5);
+}
+
+@media (min-width: 720px) {
+  .home-dashboard {
+    align-items: start;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.create-trip__form {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.owned-trips {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.owned-trips__item {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-3);
+  justify-content: space-between;
+  border-radius: var(--radius-control);
+  background: var(--color-surface-muted);
+}
+
+.owned-trips__slug {
+  overflow-wrap: anywhere;
+  color: var(--color-primary-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.share-link-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+  margin-bottom: var(--space-4);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-control);
+  background: var(--color-primary-soft);
+  padding: var(--space-3) var(--space-4);
+}
+
+.share-link-bar__label {
+  font-weight: 600;
+  color: var(--color-ink-muted);
+}
+
+.share-link-bar__url {
+  margin-right: auto;
+  overflow-wrap: anywhere;
+  color: var(--color-primary-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.read-only-notice {
+  margin-bottom: var(--space-4);
+  color: var(--color-ink-muted);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-control);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-muted);
+}
+
+.trip-status {
+  max-width: 480px;
+  text-align: left;
+  margin: var(--space-6) auto;
+}
+
+.trip-loading {
+  text-align: center;
+  padding: var(--space-6);
+  color: var(--color-ink-muted);
+}

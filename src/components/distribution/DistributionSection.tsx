@@ -18,13 +18,14 @@ import { ManualAdjustment } from "./ManualAdjustment";
 import { PersonShareCard } from "./PersonShareCard";
 
 type DistributionSectionProps = {
+  readOnly?: boolean;
   canCalculate: boolean;
   isCalculating: boolean;
   onCalculate: () => void;
 };
 
 export const DistributionSection = (props: DistributionSectionProps) => {
-  const { onCalculate, canCalculate, isCalculating } = props;
+  const { onCalculate, canCalculate, isCalculating, readOnly = false } = props;
 
   const { people, products, bindings, assignments, units, summary, shares } =
     useTripData();
@@ -43,9 +44,11 @@ export const DistributionSection = (props: DistributionSectionProps) => {
       actions={
         shares && (
           <>
-            <Button disabled={isCalculating} onClick={onCalculate}>
-              ↻ Recalcular distribuição
-            </Button>
+            {!readOnly && (
+              <Button disabled={isCalculating} onClick={onCalculate}>
+                ↻ Recalcular distribuição
+              </Button>
+            )}
             <CopyButton
               label="Copiar para WhatsApp"
               onCopy={() =>
@@ -61,15 +64,21 @@ export const DistributionSection = (props: DistributionSectionProps) => {
       {!shares || !assignments ? (
         <EmptyState
           title="Nenhuma distribuição calculada"
-          description="Cadastre pessoas e produtos e clique em Calcular distribuição. Sempre que você alterar os dados, o cálculo precisa ser refeito."
+          description={
+            readOnly
+              ? "Quem criou a lista ainda não calculou a distribuição."
+              : "Cadastre pessoas e produtos e clique em Calcular distribuição. Sempre que você alterar os dados, o cálculo precisa ser refeito."
+          }
           action={
-            <Button
-              variant="primary"
-              onClick={onCalculate}
-              disabled={!canCalculate || isCalculating}
-            >
-              Calcular distribuição
-            </Button>
+            !readOnly && (
+              <Button
+                variant="primary"
+                onClick={onCalculate}
+                disabled={!canCalculate || isCalculating}
+              >
+                Calcular distribuição
+              </Button>
+            )
           }
         />
       ) : (
@@ -111,12 +120,14 @@ export const DistributionSection = (props: DistributionSectionProps) => {
             products={products}
             bindings={bindings}
           />
-          <ManualAdjustment
-            units={units}
-            people={people}
-            assignments={assignments}
-            onReassign={reassignUnit}
-          />
+          {!readOnly && (
+            <ManualAdjustment
+              units={units}
+              people={people}
+              assignments={assignments}
+              onReassign={reassignUnit}
+            />
+          )}
         </>
       )}
     </Section>

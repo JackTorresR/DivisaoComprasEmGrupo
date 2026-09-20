@@ -1,4 +1,4 @@
-import type { Cents } from './money/money';
+import type { Cents } from "./money/money";
 
 export type Person = {
   id: string;
@@ -8,27 +8,34 @@ export type Person = {
 export type Product = {
   id: string;
   name: string;
+  unit: string;
   quantity: number;
   unitPriceCents: Cents;
-  unit: string;
 };
 
 export type Binding = {
   id: string;
-  productId: string;
   personId: string;
   quantity: number;
+  productId: string;
 };
 
 export type Unit = {
   id: string;
-  productId: string;
   name: string;
+  position: number;
+  productId: string;
   unitLabel: string;
   priceCents: Cents;
-  position: number;
   productQuantity: number;
   lockedPersonId: string | null;
 };
 
 export type Assignments = Record<string, string>;
+
+export type TripData = {
+  people: Person[];
+  products: Product[];
+  bindings: Binding[];
+  assignments: Assignments | null;
+};

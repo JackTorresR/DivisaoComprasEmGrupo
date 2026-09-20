@@ -1,0 +1,34 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function estaLogado() {
+      return request.auth != null;
+    }
+
+    function isTripOwner(existingData) {
+      return estaLogado() && request.auth.uid == existingData.ownerId;
+    }
+
+    match /trips/{slug} {
+      allow read: if true;
+
+      allow create: if estaLogado()
+        && request.resource.data.ownerId == request.auth.uid;
+
+      allow update: if isTripOwner(resource.data)
+        && request.resource.data.ownerId == resource.data.ownerId;
+
+      allow delete: if isTripOwner(resource.data);
+    }
+
+    match /users/{userId}/trips/{slug} {
+      allow read, write: if estaLogado() && request.auth.uid == userId;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

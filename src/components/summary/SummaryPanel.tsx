@@ -5,15 +5,16 @@ import { useTripData } from "../../hooks/useTripData";
 import { Button } from "../common/Button";
 
 type SummaryPanelProps = {
-  isCalculating: boolean;
+  readOnly?: boolean;
   error: string | null;
+  isCalculating: boolean;
   onCalculate: () => void;
 };
 
 type MetricProps = {
   label: string;
-  value: string | number;
   emphasis?: boolean;
+  value: string | number;
 };
 
 const Metric = ({ label, value, emphasis = false }: MetricProps) => (
@@ -23,11 +24,9 @@ const Metric = ({ label, value, emphasis = false }: MetricProps) => (
   </div>
 );
 
-export const SummaryPanel = ({
-  isCalculating,
-  error,
-  onCalculate,
-}: SummaryPanelProps) => {
+export const SummaryPanel = (props: SummaryPanelProps) => {
+  const { error, onCalculate, isCalculating, readOnly = false } = props;
+
   const { summary, shares, people, products } = useTripData();
   const readinessMessage = validateReadyToCalculate(
     people.length,
@@ -62,15 +61,19 @@ export const SummaryPanel = ({
           />
         )}
       </dl>
-      <Button
-        variant="primary"
-        className="summary__button"
-        disabled={Boolean(readinessMessage) || isCalculating}
-        onClick={onCalculate}
-      >
-        {shares ? "↻ Recalcular distribuição" : "Calcular distribuição"}
-      </Button>
-      {readinessMessage && <p className="summary__hint">{readinessMessage}</p>}
+      {!readOnly && (
+        <Button
+          variant="primary"
+          onClick={onCalculate}
+          className="summary__button"
+          disabled={Boolean(readinessMessage) || isCalculating}
+        >
+          {shares ? "↻ Recalcular distribuição" : "Calcular distribuição"}
+        </Button>
+      )}
+      {!readOnly && readinessMessage && (
+        <p className="summary__hint">{readinessMessage}</p>
+      )}
       {error && (
         <p className="field__message field__message--error" role="alert">
           {error}
