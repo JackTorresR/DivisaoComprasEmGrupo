@@ -4,12 +4,15 @@ setlocal enabledelayedexpansion
 
 color 0A
 
-title Divisor de Compras - Inicializador
+title Divisor de Compras - Build e Deploy
 
 set "NODE_REQUIRED=20.20.1"
+set "PROJECT_ROOT=%~dp0.."
+
+cd /d "%PROJECT_ROOT%"
 
 echo ==========================================
-echo     INICIANDO DIVISOR DE COMPRAS
+echo     DIVISOR DE COMPRAS - PUBLICACAO
 echo ==========================================
 echo.
 
@@ -17,7 +20,7 @@ REM =====================================================
 REM Verificar Node
 REM =====================================================
 
-echo [1/3] Verificando Node...
+echo [1/4] Verificando Node...
 
 set "NODE_CURRENT="
 
@@ -48,7 +51,8 @@ if /I "%NODE_CURRENT%"=="%NODE_REQUIRED%" (
     if errorlevel 1 (
         echo.
         echo [ERRO] NVM nao encontrado.
-        echo Instale o NVM para poder alterar automaticamente a versao do Node.
+        echo Instale o NVM para poder alterar automaticamente
+        echo a versao do Node.
         echo.
         pause
         exit /b 1
@@ -93,13 +97,11 @@ REM =====================================================
 REM Verificar dependencias
 REM =====================================================
 
-echo [2/3] Verificando dependencias...
+echo [2/4] Verificando dependencias...
 
-if not exist "%~dp0node_modules" (
+if not exist "%PROJECT_ROOT%\node_modules" (
     echo  node_modules nao encontrado.
     echo  Instalando dependencias...
-
-    cd /d "%~dp0"
 
     call npm install
 
@@ -119,23 +121,64 @@ if not exist "%~dp0node_modules" (
 echo.
 
 REM =====================================================
-REM Frontend
+REM Build
 REM =====================================================
 
-echo [3/3] Iniciando aplicacao...
+echo [3/4] Gerando build de producao...
 
-cd /d "%~dp0"
+if exist "%PROJECT_ROOT%\dist" (
+    echo  Removendo build anterior...
+    rmdir /s /q "%PROJECT_ROOT%\dist"
+)
 
-start "Divisor de Compras" cmd /k "cd /d ""%~dp0"" && npm run dev"
+call npm run build
 
-echo  [OK] Frontend iniciado.
+if errorlevel 1 (
+    echo.
+    echo ==========================================
+    echo [ERRO] BUILD FALHOU!
+    echo ==========================================
+    echo.
+    echo O deploy nao sera executado.
+    echo.
+    pause
+    exit /b 1
+)
+
+echo.
+echo  [OK] Build gerado com sucesso.
 echo.
 
+REM =====================================================
+REM Deploy
+REM =====================================================
+
+echo [4/4] Publicando no GitHub Pages...
+
+call npm run deploy
+
+if errorlevel 1 (
+    echo.
+    echo ==========================================
+    echo [ERRO] DEPLOY FALHOU!
+    echo ==========================================
+    echo.
+    pause
+    exit /b 1
+)
+
+echo.
 echo ==========================================
-echo     APLICACAO INICIADA COM SUCESSO!
+echo     PUBLICACAO ENVIADA COM SUCESSO!
 echo ==========================================
 echo.
+echo Site deploys:
+echo https://github.com/JackTorresR/DivisaoComprasEmGrupo/deployments
+echo.
+echo Site final:
+echo https://jacktorresr.github.io/DivisaoComprasEmGrupo
+echo.
 
-timeout /t 2 >nul
+pause
 
 exit
