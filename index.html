@@ -3,6 +3,24 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
+    <script type="text/javascript">
+      (function restaurarRotaOriginal(l) {
+        if (l.search[1] === "/") {
+          var decoded = l.search
+            .slice(1)
+            .split("&")
+            .map(function (segmento) {
+              return segmento.replace(/~and~/g, "&");
+            })
+            .join("?");
+          window.history.replaceState(
+            null,
+            "",
+            l.pathname.slice(0, -1) + decoded + l.hash,
+          );
+        }
+      })(window.location);
+    </script>
     <meta name="theme-color" content="#0e1513" />
     <meta name="color-scheme" content="dark light" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
