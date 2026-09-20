@@ -1,0 +1,32 @@
+<!doctype html>
+
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="theme-color" content="#0e1513" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="icon" type="image/svg+xml" href="/divisor-de-compras/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function aplicarTemaSalvoAntesDaRenderizacao() {
+        var temaSalvo = localStorage.getItem("divisor-de-compras:tema");
+
+        document.documentElement.setAttribute(
+          "data-theme",
+
+          temaSalvo === "light" ? "light" : "dark",
+        );
+      })();
+    </script>
+    <meta
+      name="description"
+      content="Organize as compras da viagem e distribua os valores de forma equilibrada."
+    />
+    <title>Divisor de Compras em grupo</title>
+    <script type="module" crossorigin src="/divisor-de-compras/assets/index-Cj6q47oq.js"></script>
+    <link rel="stylesheet" crossorigin href="/divisor-de-compras/assets/index-CQyU2bTq.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
