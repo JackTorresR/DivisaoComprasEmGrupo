@@ -6,6 +6,7 @@ import { useTrip } from "../../hooks/useTrip";
 import { useTripData } from "../../hooks/useTripData";
 import { useAppStore } from "../../store/useAppStore";
 import { scrollToElement } from "../../utils/scrollToElement";
+import { buildTripUrl } from "../../utils/tripUrl";
 import { UserMenu } from "../auth/UserMenu";
 import { Button } from "../common/Button";
 import { ConfirmDialog } from "../common/ConfirmDialog";
@@ -98,7 +99,7 @@ export const TripPage = (props: TripPageProps) => {
   const canCalculate =
     validateReadyToCalculate(people.length, products.length) === null;
 
-  const shareUrl = `${window.location.origin}/${slug}`;
+  const shareUrl = buildTripUrl(slug);
 
   const requestLoadExample = () =>
     hasData ? setPendingAction("example") : loadExample();
@@ -146,10 +147,10 @@ export const TripPage = (props: TripPageProps) => {
       <div className="dashboard">
         <aside className="dashboard__aside">
           <SummaryPanel
-            isCalculating={isCalculating}
             error={error}
-            onCalculate={calculate}
             readOnly={!isOwner}
+            onCalculate={calculate}
+            isCalculating={isCalculating}
           />
         </aside>
         <main className="dashboard__main">
@@ -157,10 +158,10 @@ export const TripPage = (props: TripPageProps) => {
           {isOwner && <ProductsSection />}
           <ShoppingListSection />
           <DistributionSection
-            isCalculating={isCalculating}
-            canCalculate={canCalculate}
-            onCalculate={calculate}
             readOnly={!isOwner}
+            onCalculate={calculate}
+            canCalculate={canCalculate}
+            isCalculating={isCalculating}
           />
         </main>
       </div>

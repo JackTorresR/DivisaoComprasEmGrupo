@@ -1,22 +1,38 @@
-import { useEffect, useRef, type SyntheticEvent } from 'react';
-import { Button } from './Button';
+import { useEffect, useRef, useState, type SyntheticEvent } from "react";
+import { Button } from "./Button";
+import { TextField } from "./TextField";
 
 type ConfirmDialogProps = {
   open: boolean;
   title: string;
   message: string;
   confirmLabel: string;
-  onConfirm: () => void;
   onCancel: () => void;
+  onConfirm: () => void;
+  confirmacaoObrigatoria?: string;
 };
 
-export const ConfirmDialog = ({ open, title, message, confirmLabel, onConfirm, onCancel }: ConfirmDialogProps) => {
+export const ConfirmDialog = (props: ConfirmDialogProps) => {
+  const {
+    open,
+    title,
+    message,
+    onCancel,
+    onConfirm,
+    confirmLabel,
+    confirmacaoObrigatoria,
+  } = props;
+
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const [valorDigitado, setValorDigitado] = useState("");
 
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
-    if (open && !dialog.open) dialog.showModal();
+    if (open && !dialog.open) {
+      setValorDigitado("");
+      dialog.showModal();
+    }
     if (!open && dialog.open) dialog.close();
   }, [open]);
 
@@ -25,13 +41,29 @@ export const ConfirmDialog = ({ open, title, message, confirmLabel, onConfirm, o
     onCancel();
   };
 
+  const confirmacaoPendente =
+    confirmacaoObrigatoria !== undefined &&
+    valorDigitado !== confirmacaoObrigatoria;
+
   return (
     <dialog ref={dialogRef} className="dialog" onCancel={handleCancel}>
       <h2 className="dialog__title">{title}</h2>
       <p className="dialog__message">{message}</p>
+      {confirmacaoObrigatoria !== undefined && (
+        <TextField
+          label={`Digite "${confirmacaoObrigatoria}" para confirmar`}
+          value={valorDigitado}
+          onChange={(event) => setValorDigitado(event.target.value)}
+          className="dialog__confirmation-field"
+        />
+      )}
       <div className="dialog__actions">
         <Button onClick={onCancel}>Cancelar</Button>
-        <Button variant="danger" onClick={onConfirm}>
+        <Button
+          variant="danger"
+          onClick={onConfirm}
+          disabled={confirmacaoPendente}
+        >
           {confirmLabel}
         </Button>
       </div>

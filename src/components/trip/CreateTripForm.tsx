@@ -11,6 +11,7 @@ import {
 import { Button } from "../common/Button";
 import { LoadingOverlay } from "../common/LoadingOverlay";
 import { TextField } from "../common/TextField";
+import { buildTripUrl } from "../../utils/tripUrl";
 
 type CreateTripFormProps = {
   ownerId: string;
@@ -66,7 +67,7 @@ export const CreateTripForm = (props: CreateTripFormProps) => {
           onChange={(event) => setRawName(event.target.value)}
           hint={
             previewSlug
-              ? `Link: ${window.location.origin}/${previewSlug}`
+              ? `Link: ${buildTripUrl(previewSlug)}`
               : undefined
           }
         />
